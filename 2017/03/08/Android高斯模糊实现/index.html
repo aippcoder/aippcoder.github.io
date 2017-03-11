@@ -1,0 +1,752 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="高斯模糊能够很好的增加图片的美感，在实际开发中使用的比较多，这里提供了三种方式实现这种效果。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android高斯模糊实现(非原创)">
+<meta property="og:url" content="http://aippcoder.github.io/2017/03/08/Android高斯模糊实现/index.html">
+<meta property="og:site_name" content="梵高笔记">
+<meta property="og:description" content="高斯模糊能够很好的增加图片的美感，在实际开发中使用的比较多，这里提供了三种方式实现这种效果。">
+<meta property="og:updated_time" content="2017-03-09T03:59:15.678Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android高斯模糊实现(非原创)">
+<meta name="twitter:description" content="高斯模糊能够很好的增加图片的美感，在实际开发中使用的比较多，这里提供了三种方式实现这种效果。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://aippcoder.github.io/2017/03/08/Android高斯模糊实现/"/>
+
+
+
+
+
+  <title> Android高斯模糊实现(非原创) | 梵高笔记 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">梵高笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">VanGogh's Note</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://aippcoder.github.io/2017/03/08/Android高斯模糊实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VanGogh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梵高笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android高斯模糊实现(非原创)
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-08T21:10:16+08:00">
+                2017-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/08/Android高斯模糊实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/08/Android高斯模糊实现/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>高斯模糊能够很好的增加图片的美感，在实际开发中使用的比较多，这里提供了三种方式实现这种效果。</p>
+<a id="more"></a>
+<h2 id="RenderScript实现"><a href="#RenderScript实现" class="headerlink" title="RenderScript实现"></a>RenderScript实现</h2><p>RenderScript是Android3.0中引入的，用来在Android上编写高性能代码的一种语言（使用C99标准）。<br>实现高斯模糊的核心代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">applyBlur</span><span class="params">()</span> </span>&#123;</div><div class="line">    image.getViewTreeObserver().addOnPreDrawListener(<span class="keyword">new</span> ViewTreeObserver.OnPreDrawListener() &#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onPreDraw</span><span class="params">()</span> </span>&#123;</div><div class="line">            image.getViewTreeObserver().removeOnPreDrawListener(<span class="keyword">this</span>);</div><div class="line">            image.buildDrawingCache();</div><div class="line">            Bitmap bmp = image.getDrawingCache();</div><div class="line">            blur(bmp, text);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@TargetApi</span>(Build.VERSION_CODES.JELLY_BEAN_MR1)</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">blur</span><span class="params">(Bitmap bkg, View view)</span> </span>&#123;</div><div class="line">    <span class="keyword">long</span> startMs = System.currentTimeMillis();</div><div class="line">    <span class="keyword">float</span> radius = <span class="number">20</span>;</div><div class="line"></div><div class="line">    Bitmap overlay = Bitmap.createBitmap((<span class="keyword">int</span>)(view.getMeasuredWidth()), (<span class="keyword">int</span>)(view.getMeasuredHeight()), Bitmap.Config.ARGB_8888);</div><div class="line">    Canvas canvas = <span class="keyword">new</span> Canvas(overlay);</div><div class="line">    canvas.translate(-view.getLeft(), -view.getTop());</div><div class="line">    canvas.drawBitmap(bkg, <span class="number">0</span>, <span class="number">0</span>, <span class="keyword">null</span>);</div><div class="line"></div><div class="line">    RenderScript rs = RenderScript.create(SecondActivity.<span class="keyword">this</span>);</div><div class="line"></div><div class="line">    Allocation overlayAlloc = Allocation.createFromBitmap(rs, overlay);</div><div class="line">    ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs, overlayAlloc.getElement());</div><div class="line">    blur.setInput(overlayAlloc);</div><div class="line">    blur.setRadius(radius);</div><div class="line">    blur.forEach(overlayAlloc);</div><div class="line">    overlayAlloc.copyTo(overlay);</div><div class="line">    view.setBackground(<span class="keyword">new</span> BitmapDrawable(getResources(), overlay));</div><div class="line">    rs.destroy();</div><div class="line"></div><div class="line">    LogUtil.d(<span class="string">"cost "</span> + (System.currentTimeMillis() - startMs) + <span class="string">"ms"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当ImageView开始加载背景图时，取出它的drawableCache，进行blur处理，Gaussian blur的主要逻辑在blur函数中。对于在Java中使用RenderScript，文档中也有详细描述，对应到我们的代码，步骤为：</p>
+<ul>
+<li>初始化一个RenderScript Context.</li>
+<li>至少创建一个Allocation对象用于存储需要处理的数据.</li>
+<li>创建compute kernel的实例，本例中是内置的ScriptIntrinsicBlur对象.</li>
+<li>设置ScriptIntrinsicBlur实例的相关属性，包括Allocation, radius等.</li>
+<li>开始blur操作，对应（forEach）.</li>
+<li>将blur后的结果拷贝回bitmap中。</li>
+</ul>
+<p>使用RenderScript存在兼容性的问题，但是性能是非常高的，在API-17以下使用需要导入RenderScript-v8兼容包，暂还试过低版本的兼容，有兴趣的可以谷歌一下。</p>
+<h2 id="FastBlur实现"><a href="#FastBlur实现" class="headerlink" title="FastBlur实现"></a>FastBlur实现</h2><p>FastBlur实现的核心代码如下:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.graphics.Bitmap;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by Van Gogh on 2016/8/29.</div><div class="line"> *</div><div class="line"> * 高斯模糊算法</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FastBlur</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title">doBlur</span><span class="params">(Bitmap sentBitmap, <span class="keyword">int</span> radius, <span class="keyword">boolean</span> canReuseInBitmap)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">// Stack Blur v1.0 from</span></div><div class="line">        <span class="comment">// http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html</span></div><div class="line">        <span class="comment">//</span></div><div class="line">        <span class="comment">// Java Author: Mario Klingemann &lt;mario at quasimondo.com&gt;</span></div><div class="line">        <span class="comment">// http://incubator.quasimondo.com</span></div><div class="line">        <span class="comment">// created Feburary 29, 2004</span></div><div class="line">        <span class="comment">// Android port : Yahel Bouaziz &lt;yahel at kayenko.com&gt;</span></div><div class="line">        <span class="comment">// http://www.kayenko.com</span></div><div class="line">        <span class="comment">// ported april 5th, 2012</span></div><div class="line"></div><div class="line">        <span class="comment">// This is a compromise between Gaussian Blur and Box blur</span></div><div class="line">        <span class="comment">// It creates much better looking blurs than Box Blur, but is</span></div><div class="line">        <span class="comment">// 7x faster than my Gaussian Blur implementation.</span></div><div class="line">        <span class="comment">//</span></div><div class="line">        <span class="comment">// I called it Stack Blur because this describes best how this</span></div><div class="line">        <span class="comment">// filter works internally: it creates a kind of moving stack</span></div><div class="line">        <span class="comment">// of colors whilst scanning through the image. Thereby it</span></div><div class="line">        <span class="comment">// just has to add one new block of color to the right side</span></div><div class="line">        <span class="comment">// of the stack and remove the leftmost color. The remaining</span></div><div class="line">        <span class="comment">// colors on the topmost layer of the stack are either added on</span></div><div class="line">        <span class="comment">// or reduced by one, depending on if they are on the right or</span></div><div class="line">        <span class="comment">// on the left side of the stack.</span></div><div class="line">        <span class="comment">//</span></div><div class="line">        <span class="comment">// If you are using this algorithm in your code please add</span></div><div class="line">        <span class="comment">// the following line:</span></div><div class="line">        <span class="comment">//</span></div><div class="line">        <span class="comment">// Stack Blur Algorithm by Mario Klingemann &lt;mario@quasimondo.com&gt;</span></div><div class="line"></div><div class="line">        Bitmap bitmap;</div><div class="line">        <span class="keyword">if</span> (canReuseInBitmap) &#123;</div><div class="line">            bitmap = sentBitmap;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            bitmap = sentBitmap.copy(sentBitmap.getConfig(), <span class="keyword">true</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (radius &lt; <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> (<span class="keyword">null</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> w = bitmap.getWidth();</div><div class="line">        <span class="keyword">int</span> h = bitmap.getHeight();</div><div class="line"></div><div class="line">        <span class="keyword">int</span>[] pix = <span class="keyword">new</span> <span class="keyword">int</span>[w * h];</div><div class="line">        bitmap.getPixels(pix, <span class="number">0</span>, w, <span class="number">0</span>, <span class="number">0</span>, w, h);</div><div class="line"></div><div class="line">        <span class="keyword">int</span> wm = w - <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> hm = h - <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> wh = w * h;</div><div class="line">        <span class="keyword">int</span> div = radius + radius + <span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> r[] = <span class="keyword">new</span> <span class="keyword">int</span>[wh];</div><div class="line">        <span class="keyword">int</span> g[] = <span class="keyword">new</span> <span class="keyword">int</span>[wh];</div><div class="line">        <span class="keyword">int</span> b[] = <span class="keyword">new</span> <span class="keyword">int</span>[wh];</div><div class="line">        <span class="keyword">int</span> rsum, gsum, bsum, x, y, i, p, yp, yi, yw;</div><div class="line">        <span class="keyword">int</span> vmin[] = <span class="keyword">new</span> <span class="keyword">int</span>[Math.max(w, h)];</div><div class="line"></div><div class="line">        <span class="keyword">int</span> divsum = (div + <span class="number">1</span>) &gt;&gt; <span class="number">1</span>;</div><div class="line">        divsum *= divsum;</div><div class="line">        <span class="keyword">int</span> dv[] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">256</span> * divsum];</div><div class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">256</span> * divsum; i++) &#123;</div><div class="line">            dv[i] = (i / divsum);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        yw = yi = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">int</span>[][] stack = <span class="keyword">new</span> <span class="keyword">int</span>[div][<span class="number">3</span>];</div><div class="line">        <span class="keyword">int</span> stackpointer;</div><div class="line">        <span class="keyword">int</span> stackstart;</div><div class="line">        <span class="keyword">int</span>[] sir;</div><div class="line">        <span class="keyword">int</span> rbs;</div><div class="line">        <span class="keyword">int</span> r1 = radius + <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> routsum, goutsum, boutsum;</div><div class="line">        <span class="keyword">int</span> rinsum, ginsum, binsum;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (y = <span class="number">0</span>; y &lt; h; y++) &#123;</div><div class="line">            rinsum = ginsum = binsum = routsum = goutsum = boutsum = rsum = gsum = bsum = <span class="number">0</span>;</div><div class="line">            <span class="keyword">for</span> (i = -radius; i &lt;= radius; i++) &#123;</div><div class="line">                p = pix[yi + Math.min(wm, Math.max(i, <span class="number">0</span>))];</div><div class="line">                sir = stack[i + radius];</div><div class="line">                sir[<span class="number">0</span>] = (p &amp; <span class="number">0xff0000</span>) &gt;&gt; <span class="number">16</span>;</div><div class="line">                sir[<span class="number">1</span>] = (p &amp; <span class="number">0x00ff00</span>) &gt;&gt; <span class="number">8</span>;</div><div class="line">                sir[<span class="number">2</span>] = (p &amp; <span class="number">0x0000ff</span>);</div><div class="line">                rbs = r1 - Math.abs(i);</div><div class="line">                rsum += sir[<span class="number">0</span>] * rbs;</div><div class="line">                gsum += sir[<span class="number">1</span>] * rbs;</div><div class="line">                bsum += sir[<span class="number">2</span>] * rbs;</div><div class="line">                <span class="keyword">if</span> (i &gt; <span class="number">0</span>) &#123;</div><div class="line">                    rinsum += sir[<span class="number">0</span>];</div><div class="line">                    ginsum += sir[<span class="number">1</span>];</div><div class="line">                    binsum += sir[<span class="number">2</span>];</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    routsum += sir[<span class="number">0</span>];</div><div class="line">                    goutsum += sir[<span class="number">1</span>];</div><div class="line">                    boutsum += sir[<span class="number">2</span>];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            stackpointer = radius;</div><div class="line"></div><div class="line">            <span class="keyword">for</span> (x = <span class="number">0</span>; x &lt; w; x++) &#123;</div><div class="line"></div><div class="line">                r[yi] = dv[rsum];</div><div class="line">                g[yi] = dv[gsum];</div><div class="line">                b[yi] = dv[bsum];</div><div class="line"></div><div class="line">                rsum -= routsum;</div><div class="line">                gsum -= goutsum;</div><div class="line">                bsum -= boutsum;</div><div class="line"></div><div class="line">                stackstart = stackpointer - radius + div;</div><div class="line">                sir = stack[stackstart % div];</div><div class="line"></div><div class="line">                routsum -= sir[<span class="number">0</span>];</div><div class="line">                goutsum -= sir[<span class="number">1</span>];</div><div class="line">                boutsum -= sir[<span class="number">2</span>];</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (y == <span class="number">0</span>) &#123;</div><div class="line">                    vmin[x] = Math.min(x + radius + <span class="number">1</span>, wm);</div><div class="line">                &#125;</div><div class="line">                p = pix[yw + vmin[x]];</div><div class="line"></div><div class="line">                sir[<span class="number">0</span>] = (p &amp; <span class="number">0xff0000</span>) &gt;&gt; <span class="number">16</span>;</div><div class="line">                sir[<span class="number">1</span>] = (p &amp; <span class="number">0x00ff00</span>) &gt;&gt; <span class="number">8</span>;</div><div class="line">                sir[<span class="number">2</span>] = (p &amp; <span class="number">0x0000ff</span>);</div><div class="line"></div><div class="line">                rinsum += sir[<span class="number">0</span>];</div><div class="line">                ginsum += sir[<span class="number">1</span>];</div><div class="line">                binsum += sir[<span class="number">2</span>];</div><div class="line"></div><div class="line">                rsum += rinsum;</div><div class="line">                gsum += ginsum;</div><div class="line">                bsum += binsum;</div><div class="line"></div><div class="line">                stackpointer = (stackpointer + <span class="number">1</span>) % div;</div><div class="line">                sir = stack[(stackpointer) % div];</div><div class="line"></div><div class="line">                routsum += sir[<span class="number">0</span>];</div><div class="line">                goutsum += sir[<span class="number">1</span>];</div><div class="line">                boutsum += sir[<span class="number">2</span>];</div><div class="line"></div><div class="line">                rinsum -= sir[<span class="number">0</span>];</div><div class="line">                ginsum -= sir[<span class="number">1</span>];</div><div class="line">                binsum -= sir[<span class="number">2</span>];</div><div class="line"></div><div class="line">                yi++;</div><div class="line">            &#125;</div><div class="line">            yw += w;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (x = <span class="number">0</span>; x &lt; w; x++) &#123;</div><div class="line">            rinsum = ginsum = binsum = routsum = goutsum = boutsum = rsum = gsum = bsum = <span class="number">0</span>;</div><div class="line">            yp = -radius * w;</div><div class="line">            <span class="keyword">for</span> (i = -radius; i &lt;= radius; i++) &#123;</div><div class="line">                yi = Math.max(<span class="number">0</span>, yp) + x;</div><div class="line"></div><div class="line">                sir = stack[i + radius];</div><div class="line"></div><div class="line">                sir[<span class="number">0</span>] = r[yi];</div><div class="line">                sir[<span class="number">1</span>] = g[yi];</div><div class="line">                sir[<span class="number">2</span>] = b[yi];</div><div class="line"></div><div class="line">                rbs = r1 - Math.abs(i);</div><div class="line"></div><div class="line">                rsum += r[yi] * rbs;</div><div class="line">                gsum += g[yi] * rbs;</div><div class="line">                bsum += b[yi] * rbs;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (i &gt; <span class="number">0</span>) &#123;</div><div class="line">                    rinsum += sir[<span class="number">0</span>];</div><div class="line">                    ginsum += sir[<span class="number">1</span>];</div><div class="line">                    binsum += sir[<span class="number">2</span>];</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    routsum += sir[<span class="number">0</span>];</div><div class="line">                    goutsum += sir[<span class="number">1</span>];</div><div class="line">                    boutsum += sir[<span class="number">2</span>];</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (i &lt; hm) &#123;</div><div class="line">                    yp += w;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            yi = x;</div><div class="line">            stackpointer = radius;</div><div class="line">            <span class="keyword">for</span> (y = <span class="number">0</span>; y &lt; h; y++) &#123;</div><div class="line">                <span class="comment">// Preserve alpha channel: ( 0xff000000 &amp; pix[yi] )</span></div><div class="line">                pix[yi] = (<span class="number">0xff000000</span> &amp; pix[yi]) | (dv[rsum] &lt;&lt; <span class="number">16</span>) | (dv[gsum] &lt;&lt; <span class="number">8</span>) | dv[bsum];</div><div class="line"></div><div class="line">                rsum -= routsum;</div><div class="line">                gsum -= goutsum;</div><div class="line">                bsum -= boutsum;</div><div class="line"></div><div class="line">                stackstart = stackpointer - radius + div;</div><div class="line">                sir = stack[stackstart % div];</div><div class="line"></div><div class="line">                routsum -= sir[<span class="number">0</span>];</div><div class="line">                goutsum -= sir[<span class="number">1</span>];</div><div class="line">                boutsum -= sir[<span class="number">2</span>];</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (x == <span class="number">0</span>) &#123;</div><div class="line">                    vmin[y] = Math.min(y + r1, hm) * w;</div><div class="line">                &#125;</div><div class="line">                p = x + vmin[y];</div><div class="line"></div><div class="line">                sir[<span class="number">0</span>] = r[p];</div><div class="line">                sir[<span class="number">1</span>] = g[p];</div><div class="line">                sir[<span class="number">2</span>] = b[p];</div><div class="line"></div><div class="line">                rinsum += sir[<span class="number">0</span>];</div><div class="line">                ginsum += sir[<span class="number">1</span>];</div><div class="line">                binsum += sir[<span class="number">2</span>];</div><div class="line"></div><div class="line">                rsum += rinsum;</div><div class="line">                gsum += ginsum;</div><div class="line">                bsum += binsum;</div><div class="line"></div><div class="line">                stackpointer = (stackpointer + <span class="number">1</span>) % div;</div><div class="line">                sir = stack[stackpointer];</div><div class="line"></div><div class="line">                routsum += sir[<span class="number">0</span>];</div><div class="line">                goutsum += sir[<span class="number">1</span>];</div><div class="line">                boutsum += sir[<span class="number">2</span>];</div><div class="line"></div><div class="line">                rinsum -= sir[<span class="number">0</span>];</div><div class="line">                ginsum -= sir[<span class="number">1</span>];</div><div class="line">                binsum -= sir[<span class="number">2</span>];</div><div class="line"></div><div class="line">                yi += w;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        bitmap.setPixels(pix, <span class="number">0</span>, w, <span class="number">0</span>, <span class="number">0</span>, w, h);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> (bitmap);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>blur方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">* 一个高斯模糊的算法</div><div class="line">*</div><div class="line">* 可以对View的背景或者ViewGroup进行模糊,使用了过期的API</div><div class="line">*</div><div class="line">* <span class="doctag">@param</span> bkg</div><div class="line">* <span class="doctag">@param</span> view</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">blur</span><span class="params">(Bitmap bkg, View view)</span> </span>&#123;</div><div class="line">    <span class="keyword">long</span> startMs = System.currentTimeMillis();</div><div class="line">    <span class="keyword">float</span> radius = <span class="number">20</span>;</div><div class="line"></div><div class="line">    Bitmap overlay = Bitmap.createBitmap((<span class="keyword">int</span>)(view.getMeasuredWidth()), (<span class="keyword">int</span>)(view.getMeasuredHeight()), Bitmap.Config.ARGB_8888);</div><div class="line">    Canvas canvas = <span class="keyword">new</span> Canvas(overlay);</div><div class="line">    canvas.translate(-view.getLeft(), -view.getTop());</div><div class="line">    canvas.drawBitmap(bkg, <span class="number">0</span>, <span class="number">0</span>, <span class="keyword">null</span>);</div><div class="line">    overlay = FastBlur.doBlur(overlay, (<span class="keyword">int</span>)radius, <span class="keyword">true</span>);</div><div class="line">    view.setBackground(<span class="keyword">new</span> BitmapDrawable(getResources(), overlay));</div><div class="line">    LogUtil.d(<span class="string">"cost "</span> + (System.currentTimeMillis() - startMs) + <span class="string">"ms"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>applyBlur方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 添加模糊效果</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">applyBlur</span><span class="params">()</span> </span>&#123;</div><div class="line">    imgBackground.getViewTreeObserver().addOnPreDrawListener(<span class="keyword">new</span> ViewTreeObserver.OnPreDrawListener() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onPreDraw</span><span class="params">()</span> </span>&#123;</div><div class="line">            imgBackground.getViewTreeObserver().removeOnPreDrawListener(<span class="keyword">this</span>);</div><div class="line">            imgBackground.buildDrawingCache();</div><div class="line">            Bitmap bmp = imgBackground.getDrawingCache();</div><div class="line">            blur(bmp, imgBackground);<span class="comment">//imgBackground替换成需要设置背景模糊的View或ViewGroup</span></div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="AdvancedFastBlur实现"><a href="#AdvancedFastBlur实现" class="headerlink" title="AdvancedFastBlur实现"></a>AdvancedFastBlur实现</h2><p>AdvancedFastBlur同样是使用FastBlur实现的,原理为先通过缩小图片，使其丢失一些像素点，接着进行模糊化处理，然后再放大到原来尺寸。由于图片缩小后再进行模糊处理，需要处理的像素点和半径都变小，从而使得模糊处理速度加快。代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 一个高斯模糊的算法</div><div class="line"> *</div><div class="line"> * 可以对View的背景或者ViewGroup进行模糊,使用了过期的API</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> bkg</div><div class="line"> * <span class="doctag">@param</span> view</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">blur</span><span class="params">(Bitmap bkg, View view)</span> </span>&#123;</div><div class="line">    <span class="keyword">long</span> startMs = System.currentTimeMillis();</div><div class="line">    <span class="keyword">float</span> radius = <span class="number">2</span>;<span class="comment">//这个比FastBlur中的要小</span></div><div class="line">    <span class="keyword">float</span> scaleFactor = <span class="number">8</span>;<span class="comment">//缩小比例</span></div><div class="line"></div><div class="line">    Bitmap overlay = Bitmap.createBitmap((<span class="keyword">int</span>)(view.getMeasuredWidth()/scaleFactor), (<span class="keyword">int</span>)(view.getMeasuredHeight()/scaleFactor), Bitmap.Config.ARGB_8888);</div><div class="line">    Canvas canvas = <span class="keyword">new</span> Canvas(overlay);</div><div class="line">    canvas.translate(-view.getLeft()/scaleFactor, -view.getTop()/scaleFactor);</div><div class="line">    canvas.scale(<span class="number">1</span> / scaleFactor, <span class="number">1</span> / scaleFactor);</div><div class="line">    Paint paint = <span class="keyword">new</span> Paint();</div><div class="line">    paint.setFlags(Paint.FILTER_BITMAP_FLAG);</div><div class="line">    canvas.drawBitmap(bkg, <span class="number">0</span>, <span class="number">0</span>, paint);</div><div class="line">    overlay = FastBlur.doBlur(overlay, (<span class="keyword">int</span>)radius, <span class="keyword">true</span>);</div><div class="line">    <span class="comment">/*</span></div><div class="line">       view.setBackgroundDrawable(Drawable);//只支持api16以上</div><div class="line">     */</div><div class="line">    view.setBackgroundDrawable(<span class="keyword">new</span> BitmapDrawable(mContext.getResources(), overlay));</div><div class="line">    LogUtil.d(<span class="string">"cost "</span> + (System.currentTimeMillis() - startMs) + <span class="string">"ms"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>applyBlur方法和FastBlur对象与FastBlur实现中的相同。效率要高于FastBlur。</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>由于FastBlur是将整个bitmap拷贝到一个临时的buffer中进行像素点操作，因此，它不适合处理一些过大的背景图，会容易导致OOM。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/08/Android性能优化/" rel="next" title="Android性能优化">
+                <i class="fa fa-chevron-left"></i> Android性能优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/09/Android的一些基本配置/" rel="prev" title="Android的一些基本配置">
+                Android的一些基本配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/08/Android高斯模糊实现/"
+           data-title="Android高斯模糊实现(非原创)" data-url="http://aippcoder.github.io/2017/03/08/Android高斯模糊实现/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="VanGogh" />
+          <p class="site-author-name" itemprop="name">VanGogh</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.wuxubj.cn/" title="务虚笔记" target="_blank">务虚笔记</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RenderScript实现"><span class="nav-number">1.</span> <span class="nav-text">RenderScript实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FastBlur实现"><span class="nav-number">2.</span> <span class="nav-text">FastBlur实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AdvancedFastBlur实现"><span class="nav-number">3.</span> <span class="nav-text">AdvancedFastBlur实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">4.</span> <span class="nav-text">注意</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VanGogh</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hupeipei"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
