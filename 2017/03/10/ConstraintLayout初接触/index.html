@@ -1,0 +1,856 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="UI布局,文档翻译," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文翻译自谷歌官方文档。
+ConstraintLayout是一个ViewGroup，它允许您以灵活的方式定位和调整小部件的大小。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ConstraintLayout初接触">
+<meta property="og:url" content="https://aippcoder.github.io/2017/03/10/ConstraintLayout初接触/index.html">
+<meta property="og:site_name" content="梵高笔记">
+<meta property="og:description" content="此文翻译自谷歌官方文档。
+ConstraintLayout是一个ViewGroup，它允许您以灵活的方式定位和调整小部件的大小。">
+<meta property="og:image" content="https://aippcoder.github.io/images/relative-positioning.png">
+<meta property="og:image" content="https://aippcoder.github.io/images/visibility-behavior.png">
+<meta property="og:image" content="https://aippcoder.github.io/images/dimension-match-constraints.png">
+<meta property="og:image" content="https://aippcoder.github.io/images/chains.png">
+<meta property="og:image" content="https://aippcoder.github.io/images/chains-head.png">
+<meta property="og:image" content="https://aippcoder.github.io/images/chains-styles.png">
+<meta property="og:updated_time" content="2017-03-10T16:34:45.150Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ConstraintLayout初接触">
+<meta name="twitter:description" content="此文翻译自谷歌官方文档。
+ConstraintLayout是一个ViewGroup，它允许您以灵活的方式定位和调整小部件的大小。">
+<meta name="twitter:image" content="https://aippcoder.github.io/images/relative-positioning.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://aippcoder.github.io/2017/03/10/ConstraintLayout初接触/"/>
+
+
+
+
+
+  <title> ConstraintLayout初接触 | 梵高笔记 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">梵高笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">VanGogh's Note</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://aippcoder.github.io/2017/03/10/ConstraintLayout初接触/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VanGogh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梵高笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ConstraintLayout初接触
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-10T21:30:30+08:00">
+                2017-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>此文翻译自<a href="https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html" target="_blank" rel="external">谷歌官方文档</a>。</p>
+<p>ConstraintLayout是一个ViewGroup，它允许您以灵活的方式定位和调整小部件的大小。<br><a id="more"></a><br>注意：ConstraintLayout可用作支持库，您可以从API级别9（Gingerbread）开始在Android系统上使用。</p>
+<p>目前有多种类型的约束提供使用：</p>
+<ul>
+<li><a href="#relative-positioning">相对定位(Relative positioning)</a></li>
+<li><a href="#margins">外边距(Margins)</a></li>
+<li><a href="#centering-positioning">中心定位(Centering positioning)</a></li>
+<li><a href="#visibility-behavior">可见性行为(Visibility behavior)</a></li>
+<li><a href="#dimension-constraints">尺寸约束(Dimension constraints)</a></li>
+<li><a href="#chains">链(Chains)</a></li>
+<li><a href="#virtual-helper-objects">虚拟助手对象(Virtual Helpers objects)</a></li>
+</ul>
+<p>在约束中不能存在循环依赖的关系，布局属性参考ConstraintLayout.LayoutParams类</p>
+<h2 id="开发人员指南"><a href="#开发人员指南" class="headerlink" title="开发人员指南"></a>开发人员指南</h2><h3 id="相对定位-Relative-positioning"><a href="#相对定位-Relative-positioning" class="headerlink" title="相对定位(Relative positioning)"></a><span id="relative-positioning">相对定位(Relative positioning)</span></h3><p>相对定位是在ConstraintLayout中创建布局的基本构建块之一。这些约束允许您相对于另一个定位给定的组件。您可以在水平和垂直轴上约束窗口组件：</p>
+<ul>
+<li>横轴：Left,Right,Start 和 End</li>
+<li>竖轴：top,bottom和text baseline</li>
+</ul>
+<p>一般作用是将一个组件定位到另外一个组件的一侧，比如，将按钮B定位到按钮A的右侧<br><img src="/images/relative-positioning.png" alt="RelativePositionExample"></p>
+<p>可以通过以下代码实现：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Button</span> <span class="attr">android:id</span>=<span class="string">"@+id/buttonA"</span> <span class="attr">...</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">Button</span> <span class="attr">android:id</span>=<span class="string">"@+id/buttonB"</span> <span class="attr">...</span></span></div><div class="line">       <span class="attr">app:layout_constraintLeft_toRightOf</span>=<span class="string">"@+id/buttonA"</span> /&gt;</div></pre></td></tr></table></figure></p>
+<p>这告诉系统我们希望按钮B的左侧被约束在按钮A的右侧。这种位置约束意味着系统将试图使两侧共享相同的位置。<br>下面是一些可用的约束：</p>
+<ul>
+<li>layout_constraintLeft_toLeftOf</li>
+<li>layout_constraintLeft_toRightOf</li>
+<li>layout_constraintRight_toLeftOf</li>
+<li>layout_constraintRight_toRightOf</li>
+<li>layout_constraintTop_toTopOf</li>
+<li>layout_constraintTop_toBottomOf</li>
+<li>layout_constraintBottom_toTopOf</li>
+<li>layout_constraintBottom_toBottomOf</li>
+<li>layout_constraintBaseline_toBaselineOf</li>
+<li>layout_constraintStart_toEndOf</li>
+<li>layout_constraintStart_toStartOf</li>
+<li>layout_constraintEnd_toStartOf</li>
+<li>layout_constraintEnd_toEndOf</li>
+</ul>
+<p>上面都是通过id引用的方式引用另外的组件，或者引用父容器(ConstraintLayout)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Button</span> <span class="attr">android:id</span>=<span class="string">"@+id/buttonB"</span> <span class="attr">...</span></span></div><div class="line">                 <span class="attr">app:layout_constraintLeft_toLeftOf</span>=<span class="string">"parent"</span> /&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="外边距-Margins"><a href="#外边距-Margins" class="headerlink" title="外边距(Margins)"></a><span id="margins">外边距(Margins)</span></h3><p>如果设置了侧边距，它们将会应用到响应的约束中，强制两个组件之间保持间距。通常通过下列的属性可以设置：</p>
+<ul>
+<li>android:layout_marginStart</li>
+<li>android:layout_marginEnd</li>
+<li>android:layout_marginLeft</li>
+<li>android:layout_marginTop</li>
+<li>android:layout_marginRight</li>
+<li>android:layout_marginBottom</li>
+</ul>
+<p>需要注意的是，边距只能为正数或者为0。</p>
+<h4 id="关联到设置为GONE组件时的边距"><a href="#关联到设置为GONE组件时的边距" class="headerlink" title="关联到设置为GONE组件时的边距"></a>关联到设置为GONE组件时的边距</h4><p>当位置约束目标的可见性为View.GONE时，还可以使用以下属性指示要使用的不同边距值：</p>
+<ul>
+<li>layout_goneMarginStart</li>
+<li>layout_goneMarginEnd</li>
+<li>layout_goneMarginLeft</li>
+<li>layout_goneMarginTop</li>
+<li>layout_goneMarginRight</li>
+<li>layout_goneMarginBottom</li>
+</ul>
+<h3 id="中心定位和偏置"><a href="#中心定位和偏置" class="headerlink" title="中心定位和偏置"></a><span id="centering-positioning">中心定位和偏置</span></h3><p>ConstraintLayout的一个有用的方面是如何处理“不可能的”约束。例如，如果我们有类似的东西：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">android.support.constraint.ConstraintLayout</span> <span class="attr">...</span>&gt;</span></div><div class="line">             <span class="tag">&lt;<span class="name">Button</span> <span class="attr">android:id</span>=<span class="string">"@+id/button"</span> <span class="attr">...</span></span></div><div class="line">                 <span class="attr">app:layout_constraintLeft_toLeftOf</span>=<span class="string">"parent"</span></div><div class="line">                 <span class="attr">app:layout_constraintRight_toRightOf</span>=<span class="string">"parent"</span>/&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">android.support.constraint.ConstraintLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>除非ConstraintLayout碰巧与Button具有完全相同的大小，否则两个约束不能同时满足（双方都不能是我们想要它们的地方。在这种情况下发生的是，约束像相反的力量一样拉动小部件分开;<code>使得小部件将最终在父容器中居中</code>。这对垂直约束同样适用。当遇到这样相反的约束时的默认值是使小部件居中;但是您可以使用bias属性来调整定位以使一侧偏向另一侧：</p>
+<ul>
+<li>layout_constraintHorizontal_bias</li>
+<li>layout_constraintVertical_bias</li>
+</ul>
+<p>例如，下面将使左侧具有30％的偏置而不是默认的50％，使得左侧将更短，其中组件更倾向于朝向左侧<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">android.support.constraint.ConstraintLayout</span> <span class="attr">...</span>&gt;</span></div><div class="line">             <span class="tag">&lt;<span class="name">Button</span> <span class="attr">android:id</span>=<span class="string">"@+id/button"</span> <span class="attr">...</span></span></div><div class="line">                 <span class="attr">app:layout_constraintHorizontal_bias</span>=<span class="string">"0.3"</span></div><div class="line">                 <span class="attr">app:layout_constraintLeft_toLeftOf</span>=<span class="string">"parent"</span></div><div class="line">                 <span class="attr">app:layout_constraintRight_toRightOf</span>=<span class="string">"parent"</span>/&gt;</div><div class="line">         <span class="tag">&lt;/&gt;</span></div></pre></td></tr></table></figure></p>
+<p>使用偏置，可以制作更好地适应屏幕大小更改的用户界面。</p>
+<h3 id="可见性行为-Visibility-behavior"><a href="#可见性行为-Visibility-behavior" class="headerlink" title="可见性行为(Visibility behavior)"></a><span id="visibility-behavior">可见性行为(Visibility behavior)</span></h3><p>ConstraintLayout具有对标记为View.GONE的窗口小部件的特定处理。GONE小部件，像往常一样，不会显示，也不是布局本身的一部分（即如果标记为GONE，它们的实际尺寸不会改变）。但是在布局计算方面，GONE小部件仍然是它的一部分，有一个重要的区别：</p>
+<ul>
+<li>对于布局传递，它们的尺寸将被认为是零（基本上，它们将被解析为一个点）</li>
+<li>如果他们对其他小部件有约束，他们仍然会被尊重，但任何边距将等于零</li>
+</ul>
+<p><img src="/images/visibility-behavior.png" alt="可见性行为"></p>
+<p>这种特定的行为允许构建布局，可以将窗口小部件临时标记为GONE，而不破坏布局（如上图），这在执行简单布局动画时尤其有用。</p>
+<p><code>注意</code>：所使用的边距将是B在关联到A时定义的边距（例如参见上图），在某些情况下，这可能不是您想要的边距（例如，A有一个100dp边缘的容器，B只有一个16dp到A，标记A为已失效，B将有16dp的容限）。因此，可以指定一个备用边距值，当关联到标记为已删除的窗口小部件时使用（参考上面的<a href="#margins">Margins属性</a>）。</p>
+<h3 id="尺寸约束"><a href="#尺寸约束" class="headerlink" title="尺寸约束"></a><span id="dimension-constraints">尺寸约束</span></h3><h4 id="对ConstraintLayout进行最小尺寸约束"><a href="#对ConstraintLayout进行最小尺寸约束" class="headerlink" title="对ConstraintLayout进行最小尺寸约束"></a>对ConstraintLayout进行最小尺寸约束</h4><p>可以为ConstraintLayout定义最小尺寸：</p>
+<ul>
+<li>android:minWidth设置ConstraintLayout的最小宽度</li>
+<li>android:minHeight设置ConstraintLayout的最小高度</li>
+</ul>
+<p>当ConstraintLayout的尺寸设置为WRAP_CONTENT时，将使用这些最小尺寸。</p>
+<h4 id="组件的尺寸约束"><a href="#组件的尺寸约束" class="headerlink" title="组件的尺寸约束"></a>组件的尺寸约束</h4><p>可以通过以3种不同的方式设置android:layout_width和android:layout_height属性来指定窗口组件的尺寸：</p>
+<ul>
+<li>使用特定尺寸（文字值，例如123dp或尺寸引用）</li>
+<li>使用WRAP_CONTENT，这将要求组件计算自己的大小</li>
+<li>使用0dp，这相当于“MATCH_CONSTRAINT”</li>
+</ul>
+<p><img src="/images/dimension-match-constraints.png" alt="dimension-match-constraints"></p>
+<p>前两个工作方式与其他布局类似。最后一个将以匹配所设置的约束的方式（参见图7，（a）是wrap_content，（b）是0dp）来调整小部件的大小。如果设置了边距，它们将在计算中考虑（图7，（c）与0dp）。</p>
+<p><code>注意</code>：对于ConstraintLayout中包含的窗口小部件，不支持MATCH_PARENT，但类似的行为可以通过使用MATCH_CONSTRAINT定义，并将相应的左/右或顶/底部约束设置为“parent”。</p>
+<h4 id="比例-ratio"><a href="#比例-ratio" class="headerlink" title="比例(ratio)"></a>比例(ratio)</h4><p>可以将组件的一个尺寸定义为另一个尺寸的比例。为此，您需要将至少一个约束尺寸设置为0dp（即，MATCH_CONSTRAINT），并将属性layout_constraintDimentionRatio设置为给定的比率。例如：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Button</span> <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"0dp"</span></div><div class="line">        <span class="attr">app:layout_constraintDimensionRatio</span>=<span class="string">"1:1"</span> /&gt;</div></pre></td></tr></table></figure></p>
+<p>将按钮的高度设置为与其宽度相同。</p>
+<p>该比例还可以表示为：</p>
+<ul>
+<li>浮动值，表示宽度和高度之间的比例</li>
+<li>形式“宽度：高度”的比例</li>
+</ul>
+<p>如果两个尺寸都设置为MATCH_CONSTRAINT（0dp），也可以使用ratio。在这种情况下，系统设置最大尺寸满足所有约束并保持指定的宽高比。基于另一个的尺寸约束一个特定边。您可以预先附加W，“或H，分别约束宽度或高度。例如，如果一个尺寸受两个目标（例如，宽度为0dp并以父级为中心）约束，则可以指示应限制哪一侧，通过在比率前面添加字母W（用于约束宽度）或H（用于约束高度），用逗号分隔：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Button</span> <span class="attr">android:layout_width</span>=<span class="string">"0dp"</span></span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"0dp"</span></div><div class="line">        <span class="attr">app:layout_constraintDimensionRatio</span>=<span class="string">"H,16:9"</span></div><div class="line">        <span class="attr">app:layout_constraintBottom_toBottomOf</span>=<span class="string">"parent"</span></div><div class="line">        <span class="attr">app:layout_constraintTop_toTopOf</span>=<span class="string">"parent"</span>/&gt;</div></pre></td></tr></table></figure></p>
+<p>将按照16：9的比率设置按钮的高度，而按钮的宽度将将约束匹配到父级。</p>
+<h3 id="链-Chains"><a href="#链-Chains" class="headerlink" title="链(Chains)"></a><span id="chains">链(Chains)</span></h3><p>链在单个轴（水平或垂直）中提供类组行为。另一个轴可以独立约束。</p>
+<h4 id="创建一个链"><a href="#创建一个链" class="headerlink" title="创建一个链"></a>创建一个链</h4><p>如果一组组件通过双向连接（参见下图，示出了具有两个组件的最小链）链接在一起，则它们被认为是链。<br><img src="/images/chains.png" alt="chain"></p>
+<h4 id="链的头部"><a href="#链的头部" class="headerlink" title="链的头部"></a>链的头部</h4><p>链由链的第一个元素（链的“头”）设置的属性控制：<br><img src="/images/chains-head.png" alt="chain-head"></p>
+<p>头是水平链的最左边的部件，垂直链的最顶部的部件。</p>
+<h4 id="链中的边距"><a href="#链中的边距" class="headerlink" title="链中的边距"></a>链中的边距</h4><p>如果在连接上指定边距，则会考虑这些边距。在展开链的情况下，将从分配的空间中扣除边距。</p>
+<h4 id="链的样式"><a href="#链的样式" class="headerlink" title="链的样式"></a>链的样式</h4><p>在链的第一个元素上设置属性layout_constraintHorizo​​ntal_chainStyle或layout_constraintVertical_chainStyle时，链的行为将根据指定的样式（默认值为CHAIN_SPREAD）而更改。</p>
+<ul>
+<li>CHAIN_SPREAD - 元素将被展开(默认样式)</li>
+<li>Weighted chain - 在CHAIN_SPREAD模式下，如果某些窗口小部件设置为MATCH_CONSTRAINT，它们将拆分可用空间</li>
+<li>CHAIN_SPREAD_INSIDE - 与CHAIN_SPREAD类似，但链的端点不会展开</li>
+<li>CHAIN_PACKED - 链的元素将被包装在一起。然后子元素的水平或垂直偏置属性将影响打包元素的定位<br><img src="/images/chains-styles.png" alt="chains-styles"><h4 id="加权链-Weighted-chains"><a href="#加权链-Weighted-chains" class="headerlink" title="加权链(Weighted chains)"></a>加权链(Weighted chains)</h4>默认行为链是在可用空间展开同样的元素。如果一个或多个元素使用MATCH_CONSTRAINT，它们将使用可用的空白空间（在它们之间平均分配）。属性<code>layout_constraintHorizo​​ntal_weight</code>和<code>layout_constraintVertical_weight</code>将控制如何使用MATCH_CONSTRAINT在这些元素之间分配空间。例如，在包含使用MATCH_CONSTRAINT的两个元素的链上，第一个元素使用权重2，第二个权重为1，第一个元素占据的空间将是第二个元素的两倍。</li>
+</ul>
+<h3 id="虚拟助手对象-Virtual-Helper-objects"><a href="#虚拟助手对象-Virtual-Helper-objects" class="headerlink" title="虚拟助手对象(Virtual Helper objects)"></a><span id="virtual-helper-objects">虚拟助手对象(Virtual Helper objects)</span></h3><p>除了前面详述的内在功能之外，您还可以在ConstraintLayout中使用特殊帮助器对象来帮助您进行布局。目前，Guideline对象允许您创建相对于ConstraintLayout容器定位的水平和垂直准线。然后可以通过将它们限制到这样的准则来定位小部件。</p>
+<h2 id="Guideline"><a href="#Guideline" class="headerlink" title="Guideline"></a>Guideline</h2><p>Guideline是ConstraintLayout的Guideline帮助器对象的实用程序类。辅助对象不显示在设备上（它们被标记为View.GONE），并且仅用于布局目的。它们只在ConstraintLayout中工作。</p>
+<p>Guideline可以是水平或垂直的：</p>
+<ul>
+<li>垂直Guideline的宽度为零，它们的ConstraintLayout父节点的高度</li>
+<li>水平Guideline的高度为零，它们的ConstraintLayout父级的宽度</li>
+</ul>
+<p>可以通过三种不同的方式定位指南：</p>
+<ul>
+<li>指定从布局的左侧或顶部的固定距离（layout_constraintGuide_begin）</li>
+<li>指定距离布局的右侧或底部的固定距离（layout_constraintGuide_end）</li>
+<li>指定布局的宽度或高度的百分比（layout_constraintGuide_percent）</li>
+</ul>
+<p>然后可以将组件限制为Guideline，从而允许从一个Guideline轻松定位多个组件，或者通过使用百分比定位来允许反应布局行为。</p>
+<p>请参阅ConstraintLayout.LayoutParams中的属性列表以在XML中设置Guideline，以及在ConstraintSet中设置相应的setGuidelineBegin（int，int），setGuidelineEnd（int，int）和setGuidelinePercent（int，float）函数。</p>
+<p>限制到垂直的Button示例Guideline：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">android.support.constraint.ConstraintLayout</span></span></div><div class="line">        <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">        <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></div><div class="line">        <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">android.support.constraint.Guideline</span></span></div><div class="line">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:id</span>=<span class="string">"@+id/guideline"</span></div><div class="line">            <span class="attr">app:layout_constraintGuide_begin</span>=<span class="string">"100dp"</span></div><div class="line">            <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>/&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">Button</span></span></div><div class="line">            <span class="attr">android:text</span>=<span class="string">"Button"</span></div><div class="line">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:id</span>=<span class="string">"@+id/button"</span></div><div class="line">            <span class="attr">app:layout_constraintLeft_toLeftOf</span>=<span class="string">"@+id/guideline"</span></div><div class="line">            <span class="attr">android:layout_marginTop</span>=<span class="string">"16dp"</span></div><div class="line">            <span class="attr">app:layout_constraintTop_toTopOf</span>=<span class="string">"parent"</span> /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">android.support.constraint.ConstraintLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h2 id="ConstraintsSet"><a href="#ConstraintsSet" class="headerlink" title="ConstraintsSet"></a>ConstraintsSet</h2><p>此类允许您以编程方式定义要与ConstraintLayout一起使用的一组约束。它允许您创建和保存约束，并将其应用于现有的ConstraintLayout。 ConstraintsSet可以通过多种方式创建：</p>
+<ul>
+<li>Manually<br><code>c = new ConstraintSet(); c.connect(....);</code></li>
+<li>from a R.layout.* object<br><code>c.clone(context, R.layout.layout1);</code></li>
+<li>from a ConstraintLayout<br><code>c.clone(clayout);</code></li>
+</ul>
+<p>示例代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> android.support.constraint.ConstraintLayout;</div><div class="line"><span class="keyword">import</span> android.support.constraint.ConstraintSet;</div><div class="line"><span class="keyword">import</span> android.support.transition.TransitionManager;</div><div class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</div><div class="line"><span class="keyword">import</span> android.view.View;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line">    ConstraintSet mConstraintSet1 = <span class="keyword">new</span> ConstraintSet(); <span class="comment">// create a Constraint Set</span></div><div class="line">    ConstraintSet mConstraintSet2 = <span class="keyword">new</span> ConstraintSet(); <span class="comment">// create a Constraint Set</span></div><div class="line">    ConstraintLayout mConstraintLayout; <span class="comment">// cache the ConstraintLayout</span></div><div class="line">    <span class="keyword">boolean</span> mOld = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        Context context = <span class="keyword">this</span>;</div><div class="line">        mConstraintSet2.clone(context, R.layout.state2); <span class="comment">// get constraints from layout</span></div><div class="line">        setContentView(R.layout.state1);</div><div class="line">        mConstraintLayout = (ConstraintLayout) findViewById(R.id.activity_main);</div><div class="line">        mConstraintSet1.clone(mConstraintLayout); <span class="comment">// get constraints from ConstraintSet</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        TransitionManager.beginDelayedTransition(mConstraintLayout);</div><div class="line">        <span class="keyword">if</span> (mOld = !mOld) &#123;</div><div class="line">            mConstraintSet1.applyTo(mConstraintLayout); <span class="comment">// set new constraints</span></div><div class="line">        &#125;  <span class="keyword">else</span> &#123;</div><div class="line">            mConstraintSet2.applyTo(mConstraintLayout); <span class="comment">// set new constraints</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UI布局/" rel="tag"># UI布局</a>
+          
+            <a href="/tags/文档翻译/" rel="tag"># 文档翻译</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/09/Android的一些基本配置/" rel="next" title="Android的一些基本配置">
+                <i class="fa fa-chevron-left"></i> Android的一些基本配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="VanGogh" />
+          <p class="site-author-name" itemprop="name">VanGogh</p>
+           
+              <p class="site-description motion-element" itemprop="description">一个苦逼程序员的自述</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.wuxubj.cn/" title="务虚笔记" target="_blank">务虚笔记</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开发人员指南"><span class="nav-number">1.</span> <span class="nav-text">开发人员指南</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相对定位-Relative-positioning"><span class="nav-number">1.1.</span> <span class="nav-text">相对定位(Relative positioning)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外边距-Margins"><span class="nav-number">1.2.</span> <span class="nav-text">外边距(Margins)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关联到设置为GONE组件时的边距"><span class="nav-number">1.2.1.</span> <span class="nav-text">关联到设置为GONE组件时的边距</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中心定位和偏置"><span class="nav-number">1.3.</span> <span class="nav-text">中心定位和偏置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可见性行为-Visibility-behavior"><span class="nav-number">1.4.</span> <span class="nav-text">可见性行为(Visibility behavior)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尺寸约束"><span class="nav-number">1.5.</span> <span class="nav-text">尺寸约束</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#对ConstraintLayout进行最小尺寸约束"><span class="nav-number">1.5.1.</span> <span class="nav-text">对ConstraintLayout进行最小尺寸约束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组件的尺寸约束"><span class="nav-number">1.5.2.</span> <span class="nav-text">组件的尺寸约束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比例-ratio"><span class="nav-number">1.5.3.</span> <span class="nav-text">比例(ratio)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链-Chains"><span class="nav-number">1.6.</span> <span class="nav-text">链(Chains)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建一个链"><span class="nav-number">1.6.1.</span> <span class="nav-text">创建一个链</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链的头部"><span class="nav-number">1.6.2.</span> <span class="nav-text">链的头部</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链中的边距"><span class="nav-number">1.6.3.</span> <span class="nav-text">链中的边距</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链的样式"><span class="nav-number">1.6.4.</span> <span class="nav-text">链的样式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#加权链-Weighted-chains"><span class="nav-number">1.6.5.</span> <span class="nav-text">加权链(Weighted chains)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟助手对象-Virtual-Helper-objects"><span class="nav-number">1.7.</span> <span class="nav-text">虚拟助手对象(Virtual Helper objects)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guideline"><span class="nav-number">2.</span> <span class="nav-text">Guideline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ConstraintsSet"><span class="nav-number">3.</span> <span class="nav-text">ConstraintsSet</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VanGogh</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,767 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="性能优化,读书笔记," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Android的性能优化在开发中尤为重要，每个开发者都应该掌握性能优化的一些知识，避免开发出性能不佳的应用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android性能优化">
+<meta property="og:url" content="https://aippcoder.github.io/2017/03/08/Android性能优化/index.html">
+<meta property="og:site_name" content="梵高笔记">
+<meta property="og:description" content="Android的性能优化在开发中尤为重要，每个开发者都应该掌握性能优化的一些知识，避免开发出性能不佳的应用。">
+<meta property="og:updated_time" content="2017-03-09T04:00:29.115Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android性能优化">
+<meta name="twitter:description" content="Android的性能优化在开发中尤为重要，每个开发者都应该掌握性能优化的一些知识，避免开发出性能不佳的应用。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://aippcoder.github.io/2017/03/08/Android性能优化/"/>
+
+
+
+
+
+  <title> Android性能优化 | 梵高笔记 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">梵高笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">VanGogh's Note</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://aippcoder.github.io/2017/03/08/Android性能优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VanGogh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梵高笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android性能优化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-08T08:54:48+08:00">
+                2017-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Android的性能优化在开发中尤为重要，每个开发者都应该掌握性能优化的一些知识，避免开发出性能不佳的应用。<br><a id="more"></a></p>
+<h3 id="Android性能优化的方法"><a href="#Android性能优化的方法" class="headerlink" title="Android性能优化的方法"></a>Android性能优化的方法</h3><h4 id="1-布局优化"><a href="#1-布局优化" class="headerlink" title="1.布局优化"></a>1.布局优化</h4><ol>
+<li>尽量减少布局文件的层级</li>
+<li>如果布局中国既可以使用LinearLayout又可以使用RelativeLayout，那么采用LinearLayout</li>
+<li>使用<include>标签重用布局</include></li>
+<li>使用<merge>标签和<include>标签一起减少布局层级</include></merge></li>
+<li>使用ViewStub延迟加载不需要的布局，ViewStub标签不能和<merge>标签一起使用。</merge></li>
+</ol>
+<h4 id="2-绘制优化"><a href="#2-绘制优化" class="headerlink" title="2.绘制优化"></a>2.绘制优化</h4><ol>
+<li>在onDraw方法中不要创建新的局部对象，因为onDraw方法会被重复调用</li>
+<li>在onDraw方法中尽量不要做耗时的操作，尽量减少使用循环，因为循环会抢占CPU的时间片，造成绘制过程不流畅。</li>
+</ol>
+<h4 id="3-内存泄露优化"><a href="#3-内存泄露优化" class="headerlink" title="3.内存泄露优化"></a>3.内存泄露优化</h4><p>内存泄露的常见场景：</p>
+<ol>
+<li>静态变量导致的内存泄露</li>
+<li>单例模式导致的内存泄露</li>
+<li>属性动画导致的内存泄露</li>
+</ol>
+<h4 id="4-响应速度优化和ANR日志分析"><a href="#4-响应速度优化和ANR日志分析" class="headerlink" title="4.响应速度优化和ANR日志分析"></a>4.响应速度优化和ANR日志分析</h4><p>出现ANR的场景：</p>
+<ol>
+<li>Activity如果5秒钟内无法响应屏幕触碰事件或键盘输入事件就会出现ANR;</li>
+<li>BroadcastReceiver如果10秒钟内还未执行完操作也会出现ANR</li>
+</ol>
+<p>响应速度优化的核心思想是避免在主线程中做耗时操作。当一个进程发生了ANR后，系统会在data/anr目录下创建一个文件trace.txt，通过分析这个文件可以定位出ANR的原因。</p>
+<h4 id="5-ListView和Bitmap优化"><a href="#5-ListView和Bitmap优化" class="headerlink" title="5.ListView和Bitmap优化"></a>5.ListView和Bitmap优化</h4><p>ListView优化主要分为3个方面：</p>
+<ol>
+<li>采用ViewHolder并避免在getView中执行耗时操作</li>
+<li>根据列表的滑动状态来控制人物的执行频率，比如当列表快速滑动时显然是不太适合开启大量的异步任务的。</li>
+<li>尝试开启硬件加速来使ListView的滑动更加流畅</li>
+</ol>
+<p>Bitmap的优化在于对图片进行采样，获取采样率可以通过如下的流程：</p>
+<ol>
+<li>将BitmapFactory.Options的inJustDecodeBounds参数设为true并加载图片</li>
+<li>从BitmapFactory.Options中取出图片的原始宽高的信息，它们对应于outWidth和outHeight参数</li>
+<li>根据采样率的规则并结合目标View的所需大小计算出采用率inSampleSize</li>
+<li>将BitmapFactory.Options的inJustDecodeBounds参数设为false，然后重新加载图片</li>
+</ol>
+<p>具体代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title">decodeSampledBitmapFromResource</span><span class="params">(Resources res, <span class="keyword">int</span> resId,<span class="keyword">int</span> reqWidth,<span class="keyword">int</span> reqHeight)</span> </span>&#123;</div><div class="line">  <span class="comment">//First decode with inJustDecodeBounds=true to check dimensions</span></div><div class="line">  <span class="keyword">final</span> BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</div><div class="line">  options.inJustDecodeBounds = <span class="keyword">true</span>;</div><div class="line">  BitmapFactory.decodeResource(res,resId,options);</div><div class="line">  <span class="comment">//Calculate inSampleSize</span></div><div class="line">  options.inSampleSize = calculateInSampleSize(options,reqWidth,reqHeight);</div><div class="line"></div><div class="line">  <span class="comment">//Decode bitmap with inSampleSize set</span></div><div class="line">  option.inJustDecodeBounds = <span class="keyword">false</span>;</div><div class="line">  <span class="keyword">return</span> BitmapFactory.decodeResource(res,resId,options);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">calculateInSampleSize</span><span class="params">(BitmapFactory.Options options, <span class="keyword">int</span> reqWidth,<span class="keyword">int</span> reqHeight)</span> </span>&#123;</div><div class="line">  <span class="comment">//Raw height and width of image</span></div><div class="line">  <span class="keyword">final</span> <span class="keyword">int</span> height = options.outHeight;</div><div class="line">  <span class="keyword">final</span> <span class="keyword">int</span> width = options.outWidth;</div><div class="line">  <span class="keyword">int</span> inSampleSize = <span class="number">1</span>;</div><div class="line"></div><div class="line">  <span class="keyword">if</span>(height &gt; reqHeight || width &gt; reqWidth) &#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> halfHeight = height / <span class="number">2</span>;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> halfWidth = width / <span class="number">2</span>;</div><div class="line">    <span class="comment">//Calculate the largest inSampleSize value that is a power of 2 and keep both</span></div><div class="line">    <span class="comment">//height and width larger than the requested height and width.</span></div><div class="line">    <span class="keyword">while</span>((halfHeight / inSampleSize) &gt;= reqHeight &amp;&amp; (halfWidth / inSampleSize) &gt;= reqWidth) &#123;</div><div class="line">      inSampleSize *= <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> inSampleSize;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="6-线程优化"><a href="#6-线程优化" class="headerlink" title="6.线程优化"></a>6.线程优化</h4><p>线程优化的思想是采用线程池，避免程序中存在大量的Thread,避免线程的创建和销毁所带来的性能开销，同时线程池还能有效的控制线程池的最大并发数，避免大量的线程因互相抢占系统资源从而导致阻塞现象的发生。</p>
+<h4 id="7-一些性能优化建议"><a href="#7-一些性能优化建议" class="headerlink" title="7.一些性能优化建议"></a>7.一些性能优化建议</h4><ul>
+<li>避免创建过多的对象</li>
+<li>不要过多使用枚举，枚举占用的内存空间要比整型大</li>
+<li>常量请使用static final 来修饰</li>
+<li>使用一些Android特有的数据结构，比如SparseArray和Pair等，它们都具有更好的性能</li>
+<li>适当使用软引用和弱引用</li>
+<li>采用内存缓存和磁盘缓存</li>
+<li>尽量采用静态内部类，这样可以避免潜在的由于内部类而导致的内存泄露</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/04/Activity的生命周期和启动模式/" rel="next" title="Activity的生命周期和启动模式">
+                <i class="fa fa-chevron-left"></i> Activity的生命周期和启动模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/08/Android高斯模糊实现/" rel="prev" title="Android高斯模糊实现(非原创)">
+                Android高斯模糊实现(非原创) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="VanGogh" />
+          <p class="site-author-name" itemprop="name">VanGogh</p>
+           
+              <p class="site-description motion-element" itemprop="description">一个苦逼程序员的自述</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.wuxubj.cn/" title="务虚笔记" target="_blank">务虚笔记</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android性能优化的方法"><span class="nav-number">1.</span> <span class="nav-text">Android性能优化的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-布局优化"><span class="nav-number">1.1.</span> <span class="nav-text">1.布局优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-绘制优化"><span class="nav-number">1.2.</span> <span class="nav-text">2.绘制优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-内存泄露优化"><span class="nav-number">1.3.</span> <span class="nav-text">3.内存泄露优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-响应速度优化和ANR日志分析"><span class="nav-number">1.4.</span> <span class="nav-text">4.响应速度优化和ANR日志分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-ListView和Bitmap优化"><span class="nav-number">1.5.</span> <span class="nav-text">5.ListView和Bitmap优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-线程优化"><span class="nav-number">1.6.</span> <span class="nav-text">6.线程优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-一些性能优化建议"><span class="nav-number">1.7.</span> <span class="nav-text">7.一些性能优化建议</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VanGogh</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
