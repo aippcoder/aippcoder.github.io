@@ -1,0 +1,814 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="屏幕适配," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Android的碎片化严重，为了适应更多的机型往往需要进行屏幕适配，这里介绍一些屏幕适配的基础知识，并且介绍几种屏幕适配的方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android屏幕适配">
+<meta property="og:url" content="https://aippcoder.github.io/2017/03/12/Android屏幕适配/index.html">
+<meta property="og:site_name" content="梵高笔记">
+<meta property="og:description" content="Android的碎片化严重，为了适应更多的机型往往需要进行屏幕适配，这里介绍一些屏幕适配的基础知识，并且介绍几种屏幕适配的方法。">
+<meta property="og:image" content="https://aippcoder.github.io/images/屏幕适配1.png">
+<meta property="og:image" content="https://aippcoder.github.io/images/屏幕适配2.png">
+<meta property="og:image" content="https://aippcoder.github.io/images/屏幕适配3.png">
+<meta property="og:updated_time" content="2017-03-12T12:41:40.705Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android屏幕适配">
+<meta name="twitter:description" content="Android的碎片化严重，为了适应更多的机型往往需要进行屏幕适配，这里介绍一些屏幕适配的基础知识，并且介绍几种屏幕适配的方法。">
+<meta name="twitter:image" content="https://aippcoder.github.io/images/屏幕适配1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://aippcoder.github.io/2017/03/12/Android屏幕适配/"/>
+
+
+
+
+
+  <title> Android屏幕适配 | 梵高笔记 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e1826d5b19b6564966061afa8c9dbb32";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">梵高笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">VanGogh's Note</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://aippcoder.github.io/2017/03/12/Android屏幕适配/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VanGogh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梵高笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android屏幕适配
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-12T19:26:20+08:00">
+                2017-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/12/Android屏幕适配/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/12/Android屏幕适配/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Android的碎片化严重，为了适应更多的机型往往需要进行屏幕适配，这里介绍一些屏幕适配的基础知识，并且介绍几种屏幕适配的方法。<br><a id="more"></a></p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="屏幕尺寸"><a href="#屏幕尺寸" class="headerlink" title="屏幕尺寸"></a>屏幕尺寸</h3><p>屏幕尺寸指的是屏幕的对角线的长度，单位为英寸，1英寸=2.54厘米，我们通常说的4.3，5.0寸即是指的这个。</p>
+<h3 id="屏幕分辨率"><a href="#屏幕分辨率" class="headerlink" title="屏幕分辨率"></a>屏幕分辨率</h3><p>屏幕分辨率指的是在横纵轴上的像素点数，单位是px，1px即为1个像素，我们通常说的720x1080就是指的这个，即横轴上的像素点为720，纵轴上的像素点为1080</p>
+<h3 id="屏幕像素密度"><a href="#屏幕像素密度" class="headerlink" title="屏幕像素密度"></a>屏幕像素密度</h3><p>屏幕像素密度指的是在每英寸上的像素点数，即dot per inch，单位为dpi，屏幕像素密度与屏幕尺寸和屏幕分辨率有关，在单一变化条件下，屏幕尺寸越小、分辨率越高，像素密度越大，反之越小。</p>
+<h3 id="dp、dip、dpi、sp、px"><a href="#dp、dip、dpi、sp、px" class="headerlink" title="dp、dip、dpi、sp、px"></a>dp、dip、dpi、sp、px</h3><ul>
+<li>dp和dip dp和dip是一个意思，都是Density Independent Pixels的缩写，即密度无关像素</li>
+<li>dpi指的是像素密度，比如我们通常所说的160dpi，指的就是一英寸里面有160个像素。</li>
+<li>px指的是像素，在像素密度为160dpi时，1dp = 1px ,在像素密度为320dpi时，1dp = 2px,以此类推。一般Android原生的API返回的值为px，比如获取屏幕宽高。</li>
+<li>sp是scale-independent pixels的缩写，与dp类似，但是可以根据文字大小首选项进行缩放，是设置字体的一般使用的单位。</li>
+</ul>
+<h3 id="mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi"><a href="#mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi" class="headerlink" title="mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi"></a>mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi</h3><p>mdpi、hdpi、xdpi、xxdpi用来修饰Android中的drawable文件夹及values文件夹，用来区分不同像素密度下的图片和dimen值。<br>Google官方指定按照屏幕像素密度的大小区间来区分：</p>
+<ul>
+<li>mdpi:120dpi~160dpi</li>
+<li>hdpi:160dpi~240dpi</li>
+<li>xhdpi:240dpi~320dpi</li>
+<li>xxhdpi:320dpi~480dpi</li>
+<li>xxxhdpi:480dpi~640dpi</li>
+</ul>
+<h2 id="几种屏幕适配的方法"><a href="#几种屏幕适配的方法" class="headerlink" title="几种屏幕适配的方法"></a>几种屏幕适配的方法</h2><p>这里介绍的方法只是比较常用的几种方法，由于Android碎片化太过于严重，有些机型上可能还存在问题，可能需要一些特殊的适配。</p>
+<h3 id="百分比方法"><a href="#百分比方法" class="headerlink" title="百分比方法"></a>百分比方法</h3><p>所谓的百分比方法，即是选定一个分辨率为基准，然后通过工具计算相应的其他分辨率的像素。在使用前，我们需要为需要适配的不同分辨率创建不同的values文件夹，这里列举其中两个分辨率，如下所示：<br><img src="/images/屏幕适配1.png" alt="不同的values文件夹"><br>比如以480*320的分辨率为基准，那么将任何分辨率的宽度都分为320份，取值为x1-x320,将任何分辨率的高度都分为480份，取值为y1-y480，如下所示：<br><img src="/images/屏幕适配2.png" alt="按照基准分"></p>
+<p>那么对于800*480的宽度为：<br><img src="/images/屏幕适配3.png" alt="对应分比率"></p>
+<p>即按照屏幕像素密度对比基准进行尺寸上的缩放。有了这些数值之后，就可以按照百分比的方法进行适配了，比如我们需要一个按钮的宽度为屏幕宽度的50%，就可以将宽度设置为x160，即x320的一半。对于这么多的分比率，我们可以使用工具类进行生成，代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"><span class="keyword">import</span> java.io.FileNotFoundException;</div><div class="line"><span class="keyword">import</span> java.io.FileOutputStream;</div><div class="line"><span class="keyword">import</span> java.io.PrintWriter;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by zhy on 15/5/3.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenerateValueFiles</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> baseW;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> baseH;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String dirStr = <span class="string">"./res"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String WTemplate = <span class="string">"&lt;dimen name=\"x&#123;0&#125;\"&gt;&#123;1&#125;px&lt;/dimen&gt;\n"</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String HTemplate = <span class="string">"&lt;dimen name=\"y&#123;0&#125;\"&gt;&#123;1&#125;px&lt;/dimen&gt;\n"</span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * &#123;0&#125;-HEIGHT</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String VALUE_TEMPLATE = <span class="string">"values-&#123;0&#125;x&#123;1&#125;"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SUPPORT_DIMESION = <span class="string">"320,480;480,800;480,854;540,960;600,1024;720,1184;720,1196;720,1280;768,1024;800,1280;1080,1812;1080,1920;1440,2560;"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String supportStr = SUPPORT_DIMESION;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GenerateValueFiles</span><span class="params">(<span class="keyword">int</span> baseX, <span class="keyword">int</span> baseY, String supportStr)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.baseW = baseX;</div><div class="line">        <span class="keyword">this</span>.baseH = baseY;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>.supportStr.contains(baseX + <span class="string">","</span> + baseY)) &#123;</div><div class="line">            <span class="keyword">this</span>.supportStr += baseX + <span class="string">","</span> + baseY + <span class="string">";"</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">this</span>.supportStr += validateInput(supportStr);</div><div class="line"></div><div class="line">        System.out.println(supportStr);</div><div class="line"></div><div class="line">        File dir = <span class="keyword">new</span> File(dirStr);</div><div class="line">        <span class="keyword">if</span> (!dir.exists()) &#123;</div><div class="line">            dir.mkdir();</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        System.out.println(dir.getAbsoluteFile());</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@param</span> supportStr</div><div class="line">     *            w,h_...w,h;</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">validateInput</span><span class="params">(String supportStr)</span> </span>&#123;</div><div class="line">        StringBuffer sb = <span class="keyword">new</span> StringBuffer();</div><div class="line">        String[] vals = supportStr.split(<span class="string">"_"</span>);</div><div class="line">        <span class="keyword">int</span> w = -<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> h = -<span class="number">1</span>;</div><div class="line">        String[] wh;</div><div class="line">        <span class="keyword">for</span> (String val : vals) &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="keyword">if</span> (val == <span class="keyword">null</span> || val.trim().length() == <span class="number">0</span>)</div><div class="line">                    <span class="keyword">continue</span>;</div><div class="line"></div><div class="line">                wh = val.split(<span class="string">","</span>);</div><div class="line">                w = Integer.parseInt(wh[<span class="number">0</span>]);</div><div class="line">                h = Integer.parseInt(wh[<span class="number">1</span>]);</div><div class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                System.out.println(<span class="string">"skip invalidate params : w,h = "</span> + val);</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            sb.append(w + <span class="string">","</span> + h + <span class="string">";"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> sb.toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">generate</span><span class="params">()</span> </span>&#123;</div><div class="line">        String[] vals = supportStr.split(<span class="string">";"</span>);</div><div class="line">        <span class="keyword">for</span> (String val : vals) &#123;</div><div class="line">            String[] wh = val.split(<span class="string">","</span>);</div><div class="line">            generateXmlFile(Integer.parseInt(wh[<span class="number">0</span>]), Integer.parseInt(wh[<span class="number">1</span>]));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">generateXmlFile</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h)</span> </span>&#123;</div><div class="line"></div><div class="line">        StringBuffer sbForWidth = <span class="keyword">new</span> StringBuffer();</div><div class="line">        sbForWidth.append(<span class="string">"&lt;?xml version=\"1.0\" encoding=\"utf-8\"?&gt;\n"</span>);</div><div class="line">        sbForWidth.append(<span class="string">"&lt;resources&gt;"</span>);</div><div class="line">        <span class="keyword">float</span> cellw = w * <span class="number">1.0f</span> / baseW;</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"width : "</span> + w + <span class="string">","</span> + baseW + <span class="string">","</span> + cellw);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; baseW; i++) &#123;</div><div class="line">            sbForWidth.append(WTemplate.replace(<span class="string">"&#123;0&#125;"</span>, i + <span class="string">""</span>).replace(<span class="string">"&#123;1&#125;"</span>,</div><div class="line">                    change(cellw * i) + <span class="string">""</span>));</div><div class="line">        &#125;</div><div class="line">        sbForWidth.append(WTemplate.replace(<span class="string">"&#123;0&#125;"</span>, baseW + <span class="string">""</span>).replace(<span class="string">"&#123;1&#125;"</span>,</div><div class="line">                w + <span class="string">""</span>));</div><div class="line">        sbForWidth.append(<span class="string">"&lt;/resources&gt;"</span>);</div><div class="line"></div><div class="line">        StringBuffer sbForHeight = <span class="keyword">new</span> StringBuffer();</div><div class="line">        sbForHeight.append(<span class="string">"&lt;?xml version=\"1.0\" encoding=\"utf-8\"?&gt;\n"</span>);</div><div class="line">        sbForHeight.append(<span class="string">"&lt;resources&gt;"</span>);</div><div class="line">        <span class="keyword">float</span> cellh = h *<span class="number">1.0f</span>/ baseH;</div><div class="line">        System.out.println(<span class="string">"height : "</span>+ h + <span class="string">","</span> + baseH + <span class="string">","</span> + cellh);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; baseH; i++) &#123;</div><div class="line">            sbForHeight.append(HTemplate.replace(<span class="string">"&#123;0&#125;"</span>, i + <span class="string">""</span>).replace(<span class="string">"&#123;1&#125;"</span>,</div><div class="line">                    change(cellh * i) + <span class="string">""</span>));</div><div class="line">        &#125;</div><div class="line">        sbForHeight.append(HTemplate.replace(<span class="string">"&#123;0&#125;"</span>, baseH + <span class="string">""</span>).replace(<span class="string">"&#123;1&#125;"</span>,</div><div class="line">                h + <span class="string">""</span>));</div><div class="line">        sbForHeight.append(<span class="string">"&lt;/resources&gt;"</span>);</div><div class="line"></div><div class="line">        File fileDir = <span class="keyword">new</span> File(dirStr + File.separator</div><div class="line">                + VALUE_TEMPLATE.replace(<span class="string">"&#123;0&#125;"</span>, h + <span class="string">""</span>)<span class="comment">//</span></div><div class="line">                        .replace(<span class="string">"&#123;1&#125;"</span>, w + <span class="string">""</span>));</div><div class="line">        fileDir.mkdir();</div><div class="line"></div><div class="line">        File layxFile = <span class="keyword">new</span> File(fileDir.getAbsolutePath(), <span class="string">"lay_x.xml"</span>);</div><div class="line">        File layyFile = <span class="keyword">new</span> File(fileDir.getAbsolutePath(), <span class="string">"lay_y.xml"</span>);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            PrintWriter pw = <span class="keyword">new</span> PrintWriter(<span class="keyword">new</span> FileOutputStream(layxFile));</div><div class="line">            pw.print(sbForWidth.toString());</div><div class="line">            pw.close();</div><div class="line">            pw = <span class="keyword">new</span> PrintWriter(<span class="keyword">new</span> FileOutputStream(layyFile));</div><div class="line">            pw.print(sbForHeight.toString());</div><div class="line">            pw.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">float</span> <span class="title">change</span><span class="params">(<span class="keyword">float</span> a)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> temp = (<span class="keyword">int</span>) (a * <span class="number">100</span>);</div><div class="line">        <span class="keyword">return</span> temp / <span class="number">100f</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> baseW = <span class="number">320</span>;<span class="comment">//修改基准的宽度</span></div><div class="line">        <span class="keyword">int</span> baseH = <span class="number">400</span>;<span class="comment">//修改基准的高度</span></div><div class="line">        String addition = <span class="string">""</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">if</span> (args.length &gt;= <span class="number">3</span>) &#123;</div><div class="line">                baseW = Integer.parseInt(args[<span class="number">0</span>]);</div><div class="line">                baseH = Integer.parseInt(args[<span class="number">1</span>]);</div><div class="line">                addition = args[<span class="number">2</span>];</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (args.length &gt;= <span class="number">2</span>) &#123;</div><div class="line">                baseW = Integer.parseInt(args[<span class="number">0</span>]);</div><div class="line">                baseH = Integer.parseInt(args[<span class="number">1</span>]);</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (args.length &gt;= <span class="number">1</span>) &#123;</div><div class="line">                addition = args[<span class="number">0</span>];</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (NumberFormatException e) &#123;</div><div class="line"></div><div class="line">            System.err</div><div class="line">                    .println(<span class="string">"right input params : java -jar xxx.jar width height w,h_w,h_..._w,h;"</span>);</div><div class="line">            e.printStackTrace();</div><div class="line">            System.exit(-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">new</span> GenerateValueFiles(baseW, baseH, addition).generate();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>将上面的java代码以java的方式直接运行，便可以生成相关的文件。参考博客<a href="http://blog.csdn.net/lmj623565791/article/details/45460089" target="_blank" rel="external">Android 屏幕适配方案 - Hongyang - 博客频道 - CSDN.NET</a></p>
+<h3 id="Google提供的百分比支持类"><a href="#Google提供的百分比支持类" class="headerlink" title="Google提供的百分比支持类"></a>Google提供的百分比支持类</h3><h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>Google官方提供了一个Android-percent-support库，基本可以解决上述问题。</p>
+<p>这个库提供了：</p>
+<p>两种布局供大家使用：<br>PercentRelativeLayout、PercentFrameLayout，通过名字就可以看出，这是继承自FrameLayout和RelativeLayout两个容器类；</p>
+<p>支持的属性有：</p>
+<p>layout_widthPercent、layout_heightPercent、 layout_marginPercent、layout_marginLeftPercent、 layout_marginTopPercent、layout_marginRightPercent、 layout_marginBottomPercent、layout_marginStartPercent、layout_marginEndPercent。</p>
+<p>可以看到支持宽高，以及margin。</p>
+<p>也就是说，只要在开发过程中使用PercentRelativeLayout、PercentFrameLayout替换FrameLayout、RelativeLayout即可。使用这个库只需要在gradle中添加如下语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile &apos;com.android.support:percent:22.2.0&apos;</div></pre></td></tr></table></figure></p>
+<p>对于LinearLayout可以参考鸿洋大神自定义的<a href="https://github.com/hongyangAndroid/android-percent-support-extend" target="_blank" rel="external">PercentLinearLayout</a></p>
+<h3 id="Android-AutoLayout全新的适配方式"><a href="#Android-AutoLayout全新的适配方式" class="headerlink" title="Android AutoLayout全新的适配方式"></a>Android AutoLayout全新的适配方式</h3><p>参考这篇文章<a href="https://github.com/hongyangAndroid/AndroidAutoLayout" target="_blank" rel="external">AndroidAutoLayout</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/屏幕适配/" rel="tag"># 屏幕适配</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/11/为GitPage绑定自己的域名/" rel="next" title="为GitPage绑定自己的域名">
+                <i class="fa fa-chevron-left"></i> 为GitPage绑定自己的域名
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/12/Android屏幕适配/"
+           data-title="Android屏幕适配" data-url="https://aippcoder.github.io/2017/03/12/Android屏幕适配/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="VanGogh" />
+          <p class="site-author-name" itemprop="name">VanGogh</p>
+           
+              <p class="site-description motion-element" itemprop="description">一个苦逼程序员的自述</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/aippcoder" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3084211763" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.wuxubj.cn/" title="务虚笔记" target="_blank">务虚笔记</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xiuweikang.github.io/" title="修维康" target="_blank">修维康</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#屏幕尺寸"><span class="nav-number">1.1.</span> <span class="nav-text">屏幕尺寸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#屏幕分辨率"><span class="nav-number">1.2.</span> <span class="nav-text">屏幕分辨率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#屏幕像素密度"><span class="nav-number">1.3.</span> <span class="nav-text">屏幕像素密度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dp、dip、dpi、sp、px"><span class="nav-number">1.4.</span> <span class="nav-text">dp、dip、dpi、sp、px</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi"><span class="nav-number">1.5.</span> <span class="nav-text">mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几种屏幕适配的方法"><span class="nav-number">2.</span> <span class="nav-text">几种屏幕适配的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#百分比方法"><span class="nav-number">2.1.</span> <span class="nav-text">百分比方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google提供的百分比支持类"><span class="nav-number">2.2.</span> <span class="nav-text">Google提供的百分比支持类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用"><span class="nav-number">2.2.1.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-AutoLayout全新的适配方式"><span class="nav-number">2.3.</span> <span class="nav-text">Android AutoLayout全新的适配方式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VanGogh</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hupeipei"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
