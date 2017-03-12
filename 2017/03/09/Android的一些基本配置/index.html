@@ -87,17 +87,17 @@
 
 
 
-<meta name="description" content="用于记录Android开发中一些基本的配置，减少查阅情况。">
+<meta name="description" content="用于记录Android开发中一些基本的配置，减少查阅情况。此篇内容基于windows环境。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android的一些基本配置">
 <meta property="og:url" content="https://aippcoder.github.io/2017/03/09/Android的一些基本配置/index.html">
 <meta property="og:site_name" content="梵高笔记">
-<meta property="og:description" content="用于记录Android开发中一些基本的配置，减少查阅情况。">
+<meta property="og:description" content="用于记录Android开发中一些基本的配置，减少查阅情况。此篇内容基于windows环境。">
 <meta property="og:image" content="https://aippcoder.github.io/images/ADBSERVERPORT.png">
-<meta property="og:updated_time" content="2017-03-09T03:57:44.188Z">
+<meta property="og:updated_time" content="2017-03-12T08:50:37.989Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android的一些基本配置">
-<meta name="twitter:description" content="用于记录Android开发中一些基本的配置，减少查阅情况。">
+<meta name="twitter:description" content="用于记录Android开发中一些基本的配置，减少查阅情况。此篇内容基于windows环境。">
 <meta name="twitter:image" content="https://aippcoder.github.io/images/ADBSERVERPORT.png">
 
 
@@ -142,6 +142,16 @@
 
 
 
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e1826d5b19b6564966061afa8c9dbb32";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -365,8 +375,14 @@
       
 
       
-        <p>用于记录Android开发中一些基本的配置，减少查阅情况。<br><a id="more"></a></p>
+        <p>用于记录Android开发中一些基本的配置，减少查阅情况。此篇内容基于windows环境。<br><a id="more"></a></p>
 <h3 id="修改adb端口"><a href="#修改adb端口" class="headerlink" title="修改adb端口"></a>修改adb端口</h3><p>Android的默认端口为5037，经常被360等一些流氓软件占用，为了避免端口经常被占用的情况，有时候可以采用修改adb端口的方式避免这个问题：<br> 新建一个环境变量，变量名为ANDROID_ADB_SERVER_PORT，值指定为一个没有使用到的端口，比如8821。<br> <img src="/images/ADBSERVERPORT.png" alt="修改adb默认端口"></p>
+<h3 id="修改avd默认路径"><a href="#修改avd默认路径" class="headerlink" title="修改avd默认路径"></a>修改avd默认路径</h3><p>Windows下Android模拟器的默认安装路径为用户目录下的.android目录，有时候我们为C盘分配的空间并不是十分充足，而每个模拟器会占有1G左右的内存，这时候有必要将avd的位置进行修改了。可以通过如下的步骤实现默认路径的修改：</p>
+<ol>
+<li>新建环境变量名为ANDROID_SDK_HOME,变量值为需要存放avd目录，比如”D:\android\avd\”</li>
+<li>如果之前没有创建avd，那么这样便可以了，之后创建的avd都会存放到相应的目录中，之后的步骤不需要进行操作</li>
+<li>如果之前有创建avd，则可以通过一些修改保留之前的avd，首先，把原来C:\Documents and Settings\Administrator\.android\avd下面的全部文件夹复制到 D:\android\avd\下面；然后，把avd下面的*.ini文件里面的path值 C:\Documents and Settings\Administrator\.android\avd部分全部改成D:\android\avd\.android\avd;最后再进一个以.avd结尾的文件夹改下面的hardware-qemu.ini这个文件里面的path值 C:\Documents and Settings\Administrator\.android\avd 部分全部改成D:\android\avd\.android\avd。</li>
+</ol>
 
       
     </div>
@@ -513,7 +529,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -567,6 +583,10 @@
                   <a href="http://www.wuxubj.cn/" title="务虚笔记" target="_blank">务虚笔记</a>
                 </li>
               
+                <li class="links-of-blogroll-item">
+                  <a href="http://xiuweikang.github.io/" title="修维康" target="_blank">修维康</a>
+                </li>
+              
             </ul>
           </div>
         
@@ -586,7 +606,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改adb端口"><span class="nav-number">1.</span> <span class="nav-text">修改adb端口</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改adb端口"><span class="nav-number">1.</span> <span class="nav-text">修改adb端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改avd默认路径"><span class="nav-number">2.</span> <span class="nav-text">修改avd默认路径</span></a></li></ol></div>
             
 
           </div>
